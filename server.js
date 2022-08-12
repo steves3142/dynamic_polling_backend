@@ -19,9 +19,10 @@ app.use('/api', ServerRouter)
 
 getIO().on('connection', (socket) => {
 	console.log(`User ${socket.id} connected`)
-	socket.on('student-message', (message) => {
-		console.log(message)
+	socket.on('send-message', (message) => {
+		getIO().emit('receive-message', message)
 	})
+
 	socket.on('disconnect', () => {
 		console.log(`User ${socket.id} disconnect`)
 	})
