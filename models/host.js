@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Host.hasMany(models.Room, {
         as: 'room_owner',
-        foreignKey: 'room_id'
+        foreignKey: 'owner_id'
       })
     }
   }

@@ -4,7 +4,6 @@ const io = getIO()
 
 const submitAnswer = async (req, res) => {
 	try {
-		//TODO: create answer and link to db
 		const answer = await Answer.create(req.body)
 		res.status(200).json(answer)
 	} catch (error) {

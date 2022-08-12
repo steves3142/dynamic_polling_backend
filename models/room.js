@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'room_id'
       })
 
-      Room.belongsTo(models.Host, {
+      Room.hasOne(models.Host, {
         as: 'host',
         foreignKey: 'account_id'
       })
