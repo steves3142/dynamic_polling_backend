@@ -9,4 +9,6 @@ Router.delete('/delete/:question_id', controller.DeleteQuestion)
 
 Router.put('/update/:question_id', controller.UpdateQuestion)
 
+Router.post('/submit/choices', controller.CreateChoices)
+
 module.exports = Router
