@@ -1,15 +1,30 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const http = require('http')
+const server = http.createServer(app)
+const { init, getIO } = require('./utils/socket')
 
-const AppRouter = require('./routes/ServerRouter')
+const ServerRouter = require('./routes/ServerRouter')
 
 const PORT = process.env.PORT || 3001
 
-app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors())
+init(server)
 
 app.get('/', (req, res) => res.json({ message: 'Server Works' }))
-app.use('/api', AppRouter)
-app.listen(PORT, () => console.log(`Server Started On Port: ${PORT}`))
+app.use('/api', ServerRouter)
+
+getIO().on('connection', (socket) => {
+	console.log(`User ${socket.id} connected`)
+	socket.on('student-message', (message) => {
+		console.log(message)
+	})
+	socket.on('disconnect', () => {
+		console.log(`User ${socket.id} disconnect`)
+	})
+})
+
+server.listen(PORT, () => console.log(`Server Started On Port: ${PORT}`))
