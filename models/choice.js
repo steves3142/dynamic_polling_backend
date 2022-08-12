@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 	}
 	Choice.init(
 		{
-			student_id: DataTypes.INTEGER,
 			question_id: DataTypes.INTEGER,
 			choice: DataTypes.TEXT,
 		},
