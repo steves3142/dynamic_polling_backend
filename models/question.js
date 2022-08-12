@@ -11,18 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Question.belongsTo(models.Room, {
-        as: 'current_question',
-        foreignKey: room_id
+        as: 'questions',
+        foreignKey: 'room_id'
       })
 
       Question.hasMany(models.Answer, {
-        as: 'answer',
-        foreignKey: 'answer_id'
+        as: 'answers',
+        foreignKey: 'question_id'
       })
 
       Question.hasMany(models.Choice, {
-        as: 'current_choice',
-        foreignKey: 'choice_id'
+        as: 'choices',
+        foreignKey: 'question_id'
       })
     }
   }

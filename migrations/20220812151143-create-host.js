@@ -1,21 +1,15 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('answers', {
+    await queryInterface.createTable('hosts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      student_id: {
+      account_id: {
         type: Sequelize.INTEGER
-      },
-      question_id: {
-        type: Sequelize.INTEGER
-      },
-      response: {
-        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +22,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('answers');
+    await queryInterface.dropTable('hosts');
   }
 };
