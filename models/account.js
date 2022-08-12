@@ -10,7 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Account.hasOne(models.Host, {
+        as: 'host',
+        foreignKey: 'account_id'
+      })
+
+      Account.hasOne(models.Client, {
+        as: 'client',
+        foreignKey: 'account_id'
+      })
     }
   }
   Account.init({
