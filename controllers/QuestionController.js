@@ -40,11 +40,23 @@ const UpdateQuestion = async (req, res) => {
     }
 }
 
-
+const DeleteQuestion = async (req, res) => {
+    try {
+        let questionId = parseInt(req.params.question_id)
+        const deletedQuestion = await Question.destroy({
+            where: { id: questionId }
+        })
+        res.json({message: `Deleted question with ID of ${questionId}`})
+    } catch (error) {
+        console.log(error)
+        res.status(400).json({ error: 'Something went wrong' })
+    }
+}
 
 
 module.exports = { 
     createQuestion,
     GetQuestions,
-    UpdateQuestion
+    UpdateQuestion,
+    DeleteQuestion
 }
