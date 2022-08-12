@@ -9,13 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			Answer.belongsTo(models.Question, {
-				as: 'answers',
-				foreignKey: 'question_id'
+				as: 'student_answer',
+				foreignKey: 'question_id',
 			})
 
 			Answer.belongsTo(models.Client, {
 				as: 'answers',
-				foreignKey: 'question_id'
+				foreignKey: 'student_id',
 			})
 		}
 	}
