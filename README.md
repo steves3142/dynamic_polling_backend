@@ -1,1 +1,6 @@
-# dynamic_polling_backend
+# Dynamic Polling (Backend)
+
+
+## Entity Relationship Diagram
+
+![ERD](ERD.png)
