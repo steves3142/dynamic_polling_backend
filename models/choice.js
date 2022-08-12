@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			Choice.belongsTo(models.Question, {
-				as: 'current_choice',
+				as: 'choices',
 				foreignKey: 'question_id'
 			})
 		}
 	}
 	Choice.init(
 		{
-			student_Id: DataTypes.INTEGER,
+			student_id: DataTypes.INTEGER,
 			question_id: DataTypes.INTEGER,
 			choice: DataTypes.TEXT,
 		},

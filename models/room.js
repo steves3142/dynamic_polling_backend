@@ -14,6 +14,16 @@ module.exports = (sequelize, DataTypes) => {
         as: 'questions',
         foreignKey: 'questionId'
       })
+
+      Room.belongsTo(models.Host, {
+        as: 'host',
+        foreignKey: 'account_id'
+      })
+
+      Room.hasMany(models.Client, {
+        as: 'clients',
+        foreignKey: 'student_id'
+      })
     }
   }
   Room.init({

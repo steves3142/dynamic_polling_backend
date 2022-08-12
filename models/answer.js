@@ -9,14 +9,19 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			Answer.belongsTo(models.Question, {
-				as: 'current_answer',
+				as: 'answers',
+				foreignKey: 'question_id'
+			})
+
+			Answer.belongsTo(models.Client, {
+				as: 'answers',
 				foreignKey: 'question_id'
 			})
 		}
 	}
 	Answer.init(
 		{
-			student_Id: DataTypes.INTEGER,
+			student_id: DataTypes.INTEGER,
 			question_id: DataTypes.INTEGER,
 			response: DataTypes.TEXT,
 		},
