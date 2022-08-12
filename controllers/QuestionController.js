@@ -1,6 +1,6 @@
 const { getIO } = require('../utils/socket')
 const io = getIO()
-const { Question } = require('../models')
+const { Question, Choice } = require('../models')
 
 const createQuestion = async (req, res) => {
 	try {
@@ -56,9 +56,24 @@ const DeleteQuestion = async (req, res) => {
 	}
 }
 
-module.exports = {
-	createQuestion,
-	GetQuestions,
-	UpdateQuestion,
-	DeleteQuestion,
+
+const CreateChoices = async (req, res) => {
+    try {
+        let choiceBody = {
+            ...req.body
+        }
+        let choices = await Choice.create(choiceBody)
+        res.json(choices)
+    } catch (error) {
+        console.log(error)
+		res.status(400).json({ error: 'Something went wrong' })
+    }
+}
+
+module.exports = { 
+    createQuestion,
+    GetQuestions,
+    UpdateQuestion,
+    DeleteQuestion,
+    CreateChoices
 }
