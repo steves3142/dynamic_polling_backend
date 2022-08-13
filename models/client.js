@@ -10,6 +10,13 @@ module.exports = (sequelize, DataTypes) => {
 				onUpdate: 'cascade',
 			})
 
+			Client.hasMany(models.Answer, {
+				as: 'answers',
+				foreignKey: 'student_id',
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
+			})
+
 			Client.belongsTo(models.Room, {
 				as: 'client',
 				foreignKey: 'room_id',
@@ -18,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
 			})
 		}
 	}
+
 	Client.init(
 		{
 			account_id: {

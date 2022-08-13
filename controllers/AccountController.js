@@ -30,7 +30,7 @@ const CreateClient = async (req, res) => {
 			type: type,
 		}
 		const account = await Account.create(accountBody)
-		const client = Client.create({ account_id: account.id })
+		const client = await Client.create({ account_id: account.id })
 		res.send({ account, client })
 	} catch (error) {
 		console.log(error)

@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
 
 			Room.hasMany(models.Client, {
 				as: 'clients',
-				foreignKey: 'student_id',
+				foreignKey: 'room_id',
 				onDelete: 'cascade',
 				onUpdate: 'cascade',
 			})

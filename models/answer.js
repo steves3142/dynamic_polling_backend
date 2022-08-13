@@ -9,12 +9,25 @@ module.exports = (sequelize, DataTypes) => {
 				onDelete: 'cascade',
 				onUpdate: 'cascade',
 			})
+			Answer.belongsTo(models.Client, {
+				as: 'answerer',
+				foreignKey: 'student_id',
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
+			})
 		}
 	}
 	Answer.init(
 		{
 			student_id: {
 				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'clients',
+					key: 'id',
+					onDelete: 'cascade',
+					onUpdate: 'cascade',
+				},
 			},
 			question_id: {
 				type: DataTypes.INTEGER,
