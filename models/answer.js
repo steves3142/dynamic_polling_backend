@@ -2,33 +2,50 @@
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
 	class Answer extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		static associate(models) {
 			Answer.belongsTo(models.Question, {
 				as: 'student_answer',
 				foreignKey: 'question_id',
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
 			})
-
 			Answer.belongsTo(models.Client, {
-				as: 'answers',
+				as: 'answerer',
 				foreignKey: 'student_id',
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
 			})
 		}
 	}
 	Answer.init(
 		{
-			student_id: DataTypes.INTEGER,
-			question_id: DataTypes.INTEGER,
+			student_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'clients',
+					key: 'id',
+					onDelete: 'cascade',
+					onUpdate: 'cascade',
+				},
+			},
+			question_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'questions',
+					key: 'id',
+					onDelete: 'cascade',
+					onUpdate: 'cascade',
+				},
+			},
 			response: DataTypes.TEXT,
 		},
 		{
 			sequelize,
 			modelName: 'Answer',
 			tableName: 'answers',
+			freezeTableName: true,
 		}
 	)
 	return Answer

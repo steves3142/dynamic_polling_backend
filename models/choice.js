@@ -10,13 +10,24 @@ module.exports = (sequelize, DataTypes) => {
 		static associate(models) {
 			Choice.belongsTo(models.Question, {
 				as: 'choices',
-				foreignKey: 'question_id'
+				foreignKey: 'question_id',
+				onDelete: 'cascade',
+				onUpdate: 'cascade',
 			})
 		}
 	}
 	Choice.init(
 		{
-			question_id: DataTypes.INTEGER,
+			question_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'questions',
+					key: 'id',
+					onDelete: 'cascade',
+					onUpdate: 'cascade',
+				},
+			},
 			choice: DataTypes.TEXT,
 		},
 		{
