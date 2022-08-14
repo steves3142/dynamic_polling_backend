@@ -18,7 +18,7 @@ const CreateRoom = async (req, res) => {
 const getRoomByOwnerId = async (req, res) => {
 	try {
 		let ownerId = parseInt(req.params.owner_id)
-		const roomList = await Room.findAll({ where: { id: ownerId } })
+		const roomList = await Room.findAll({ where: { owner_id: ownerId } })
 		res.status(200).json(roomList)
 	} catch (error) {
 		res.status(400).json({ error: error })
