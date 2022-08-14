@@ -9,6 +9,8 @@ Router.get(
 	middleware.verifyToken,
 	controller.checkSession
 )
+
+Router.get('/accounttype/:type/:user_id', controller.getAccountTypeInfoById)
 Router.post('/submit/host', controller.CreateHost)
 Router.post('/submit/client', controller.CreateClient)
 

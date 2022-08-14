@@ -1,6 +1,7 @@
 const { getIO } = require('../utils/socket')
 const middleware = require('../middleware')
 const { Account, Host, Client } = require('../models')
+const { response } = require('express')
 
 const CreateHost = async (req, res) => {
 	try {
@@ -51,6 +52,7 @@ const login = async (req, res) => {
 			let payload = {
 				id: user.id,
 				email: user.email,
+				type: user.type,
 			}
 			let token = middleware.createToken(payload)
 			return res.send({ user: payload, token })
@@ -67,9 +69,31 @@ const checkSession = async (req, res) => {
 	res.send({ user: payload })
 }
 
+const getAccountTypeInfoById = async (req, res) => {
+	const type = req.params.type
+	const accountId = req.params.user_id
+	try {
+		if (type == 'host') {
+			const host = await Host.findOne({ where: { account_id: accountId } })
+			if (host) {
+				return res.status(200).json(host)
+			}
+		} else {
+			const client = await Client.findOne({ where: { account_id: accountId } })
+			if (client) {
+				return res.status(200).json(client)
+			}
+		}
+		return res.status(404).json('no linked accouunt type info')
+	} catch (error) {
+		res.status(401).send({ error })
+	}
+}
+
 module.exports = {
 	CreateHost,
 	CreateClient,
 	login,
 	checkSession,
+	getAccountTypeInfoById,
 }
