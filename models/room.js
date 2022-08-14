@@ -42,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
 					onUpdate: 'cascade',
 				},
 			},
+			name: DataTypes.STRING,
 			join_key: DataTypes.STRING,
 			isActive: DataTypes.BOOLEAN,
 		},
