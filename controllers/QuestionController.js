@@ -69,17 +69,6 @@ const DeleteQuestion = async (req, res) => {
 	}
 }
 
-const CreateChoices = async (req, res) => {
-	try {
-		let choices = req.body.choices
-		let question_id = req.body.question_id
-		res.json()
-	} catch (error) {
-		console.log(error)
-		res.status(400).json({ error: 'Something went wrong' })
-	}
-}
-
 module.exports = {
 	createQuestion,
 	GetQuestions,
