@@ -25,10 +25,9 @@ getIO().on('connection', (socket) => {
 	socket.on('send-message', (message) => {
 		getIO().to(10).emit('receive-message', message)
 	})
-
 	socket.on('newAnswer', (data) => {
 		console.log('recieved answer', data.answer)
-		getIO().to(10).emit('new_answer', data.answer)
+		getIO().to(10).emit('new-answer', data.answer)
 	})
 
 	socket.on('disconnect', () => {

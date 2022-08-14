@@ -6,7 +6,10 @@ const createQuestion = async (req, res) => {
 	try {
 		let room_id = parseInt(req.params.room_id)
 		let questionBody = {
-			...req.body,
+			...req.body.question,
+		}
+		let choices = {
+			...req.body.choices
 		}
 		let question = await Question.create(questionBody)
 		getIO().to(room_id).emit('new-question', question)
