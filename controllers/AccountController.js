@@ -61,8 +61,15 @@ const login = async (req, res) => {
 	}
 }
 
+const checkSession = async (req, res) => {
+	const { payload } = res.locals
+	console.log(payload)
+	res.send({ user: payload })
+}
+
 module.exports = {
 	CreateHost,
 	CreateClient,
 	login,
+	checkSession,
 }
