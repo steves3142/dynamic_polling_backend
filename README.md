@@ -1,5 +1,6 @@
 # DynaSoar Polling App (Backend)
 
+![Logo](https://i.imgur.com/4Za1ekP.png)
 
 ## Project Description
 
