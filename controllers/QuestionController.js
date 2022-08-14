@@ -9,14 +9,24 @@ const createQuestion = async (req, res) => {
 			...req.body.question,
 		}
 		let choices = {
-			...req.body.choices
+			...req.body.choices,
 		}
 		let question = await Question.create(questionBody)
-		getIO().to(room_id).emit('new-question', question)
-		res.json(question)
+		let createdChoices = []
+		for (const choice in choices) {
+			let option = await Choice.create({
+				question_id: question.id,
+				choice: choice,
+			})
+			createdChoices.push(option)
+		}
+		getIO()
+			.to(room_id)
+			.emit('new-question', { question: question, choices: createdChoices })
+		res.json({ question: question, choices: createdChoices })
 	} catch (error) {
 		console.log(error)
-		res.status(400).json({ error: 'Something went wrong' })
+		res.status(400).json({ error: error })
 	}
 }
 
@@ -59,24 +69,20 @@ const DeleteQuestion = async (req, res) => {
 	}
 }
 
-
 const CreateChoices = async (req, res) => {
-    try {
-        let choiceBody = {
-            ...req.body
-        }
-        let choices = await Choice.create(choiceBody)
-        res.json(choices)
-    } catch (error) {
-        console.log(error)
+	try {
+		let choices = req.body.choices
+		let question_id = req.body.question_id
+		res.json()
+	} catch (error) {
+		console.log(error)
 		res.status(400).json({ error: 'Something went wrong' })
-    }
+	}
 }
 
-module.exports = { 
-    createQuestion,
-    GetQuestions,
-    UpdateQuestion,
-    DeleteQuestion,
-    CreateChoices
+module.exports = {
+	createQuestion,
+	GetQuestions,
+	UpdateQuestion,
+	DeleteQuestion,
 }
