@@ -44,6 +44,7 @@ const GetQuestions = async (req, res) => {
 				},
 			},
 			include: ['choices', 'answers'],
+			order: [['createdAt', 'DESC']]
 		})
 		res.json(questions)
 	} catch (error) {
