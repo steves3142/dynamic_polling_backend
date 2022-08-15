@@ -3,7 +3,7 @@ const controller = require('../controllers/QuestionController')
 
 Router.post('/submit/question/:room_id', controller.createQuestion)
 
-Router.get('/pull/questions', controller.GetQuestions)
+Router.post('/pull/questions/:room_id', controller.GetQuestions)
 
 Router.delete('/delete/:question_id', controller.DeleteQuestion)
 

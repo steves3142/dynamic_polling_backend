@@ -1,6 +1,6 @@
 const { getIO } = require('../utils/socket')
-const io = getIO()
 const { Question, Choice } = require('../models')
+const { Op } = require('sequelize')
 
 const createQuestion = async (req, res) => {
 	try {
@@ -11,12 +11,14 @@ const createQuestion = async (req, res) => {
 		let choices = [...req.body.choices]
 		let question = await Question.create(questionBody)
 		let createdChoices = []
-		for (const choice of choices) {
-			let option = await Choice.create({
-				question_id: question.id,
-				choice: choice,
-			})
-			createdChoices.push(option)
+		if (questionBody.type == 'MC') {
+			for (const choice of choices) {
+				let option = await Choice.create({
+					question_id: question.id,
+					choice: choice,
+				})
+				createdChoices.push(option)
+			}
 		}
 		getIO()
 			.to(room_id)
@@ -30,7 +32,19 @@ const createQuestion = async (req, res) => {
 
 const GetQuestions = async (req, res) => {
 	try {
-		const questions = await Question.findAll()
+		let room_id = parseInt(req.params.room_id)
+		let from = new Date(req.body.range.from)
+		let to = new Date(req.body.range.to)
+		console.log(from)
+		const questions = await Question.findAll({
+			where: {
+				room_id: room_id,
+				createdAt: {
+					[Op.between]: [from.toISOString(), to.toISOString()],
+				},
+			},
+			include: ['choices', 'answers'],
+		})
 		res.json(questions)
 	} catch (error) {
 		console.log(error)
