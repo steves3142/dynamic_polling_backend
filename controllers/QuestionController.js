@@ -8,12 +8,10 @@ const createQuestion = async (req, res) => {
 		let questionBody = {
 			...req.body.question,
 		}
-		let choices = {
-			...req.body.choices,
-		}
+		let choices = [...req.body.choices]
 		let question = await Question.create(questionBody)
 		let createdChoices = []
-		for (const choice in choices) {
+		for (const choice of choices) {
 			let option = await Choice.create({
 				question_id: question.id,
 				choice: choice,
