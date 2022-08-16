@@ -19,8 +19,9 @@ app.use('/api', ServerRouter)
 
 getIO().on('connection', (socket) => {
 	console.log(`User ${socket.id} connected`)
-
-	socket.join(10)
+	socket.on('join_room', (room) => {
+		console.log(`${socket.id} is joining room: ${room.id}`)
+	})
 
 	socket.on('send-message', (message) => {
 		getIO().to(10).emit('receive-message', message)
@@ -28,7 +29,8 @@ getIO().on('connection', (socket) => {
 
 	socket.on('room-announce', (data) => {
 		console.log(data.message)
-		getIO().to(10).emit('room-announcement', data.message)
+		console.log(data.room.id)
+		getIO().to(data.room.id).emit('room-announcement', data.message)
 	})
 	socket.on('newAnswer', (data) => {
 		console.log('recieved answer', data.answer)
