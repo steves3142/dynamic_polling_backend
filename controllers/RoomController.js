@@ -1,26 +1,26 @@
-const { UUID } = require('sequelize');
-const ShortUniqueId = require('short-unique-id');
+const { UUID } = require('sequelize')
+const ShortUniqueId = require('short-unique-id')
 const { Room } = require('../models')
 const { getIO } = require('../utils/socket')
 const io = getIO()
 
-
-
 const CreateRoom = async (req, res) => {
 	try {
-		const uid = new ShortUniqueId({length: 8});
-		
-		let joinKey = uid(); 
-		let unique = true;
-		const roomJoinKeys = await Room.findAll({
-			attributes: ['join_key']
+		const uid = new ShortUniqueId({ length: 8 })
+		let joinKey = uid()
+		let roomJoinKeys = await Room.findAll({
+			attributes: ['join_key'],
+			raw: true,
 		})
 		let roomBody = {
 			...req.body,
 			join_key: joinKey,
 		}
-		console.log(joinKey)
-		console.log(roomJoinKeys) //estimate of collision 
+		roomJoinKeys = roomJoinKeys.map((key) => key.join_key)
+		console.log(roomJoinKeys)
+		while (roomJoinKeys.includes(joinKey)) {
+			joinKey = uid()
+		}
 		const newRoom = await Room.create(roomBody)
 		res.send(newRoom)
 	} catch (error) {
