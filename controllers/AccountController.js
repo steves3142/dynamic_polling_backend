@@ -4,10 +4,11 @@ const { response } = require('express')
 
 const CreateHost = async (req, res) => {
 	try {
-		const { email, password, type } = req.body
+		const { email, password, type, displayName } = req.body
 		let passwordDigest = await middleware.hashPassword(password)
 		let accountBody = {
 			email,
+			display_name: displayName,
 			passwordDigest: passwordDigest,
 			type: type,
 		}
@@ -22,10 +23,11 @@ const CreateHost = async (req, res) => {
 
 const CreateClient = async (req, res) => {
 	try {
-		const { email, password, type } = req.body
+		const { email, password, type, displayName } = req.body
 		let passwordDigest = await middleware.hashPassword(password)
 		let accountBody = {
 			email,
+			display_name: displayName,
 			passwordDigest: passwordDigest,
 			type: type,
 		}
@@ -52,8 +54,10 @@ const login = async (req, res) => {
 				id: user.id,
 				email: user.email,
 				type: user.type,
+				display_name: user.display_name,
 			}
 			let token = middleware.createToken(payload)
+			console.log(payload)
 			return res.send({ user: payload, token })
 		}
 		res.status(401).send({ status: 'Error', msg: 'Unauthorized' })
