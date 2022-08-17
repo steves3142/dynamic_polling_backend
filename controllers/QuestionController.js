@@ -79,9 +79,10 @@ const UpdateQuestion = async (req, res) => {
 			returning: true,
 		})
 		updatedQuestion = updatedQuestion[1][0]
-		getIO()
-			.to(updatedQuestion.room_id)
-			.emit('updated-question', updatedQuestion)
+		getIO().to(updatedQuestion.room_id).emit('updated-question', {
+			question: updatedQuestion,
+			choices: updatedChoices,
+		})
 		res.json({ question: updatedQuestion, choices: updatedChoices })
 	} catch (error) {
 		console.log(error)
