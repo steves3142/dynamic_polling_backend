@@ -8,14 +8,15 @@ const createQuestion = async (req, res) => {
 		let questionBody = {
 			...req.body.question,
 		}
-		let choices = [...req.body.choices]
+
 		let question = await Question.create(questionBody)
 		let createdChoices = []
 		if (questionBody.type == 'MC') {
+			let choices = [...req.body.choices]
 			for (const choice of choices) {
 				let option = await Choice.create({
 					question_id: question.id,
-					choice: choice,
+					choice: choice.choice,
 				})
 				createdChoices.push(option)
 			}
@@ -44,7 +45,7 @@ const GetQuestions = async (req, res) => {
 				},
 			},
 			include: ['choices', 'answers'],
-			order: [['createdAt', 'DESC']]
+			order: [['createdAt', 'DESC']],
 		})
 		res.json(questions)
 	} catch (error) {
