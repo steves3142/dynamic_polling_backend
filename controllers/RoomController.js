@@ -1,8 +1,7 @@
+const { response } = require('express')
 const { UUID } = require('sequelize')
 const ShortUniqueId = require('short-unique-id')
 const { Room } = require('../models')
-const { getIO } = require('../utils/socket')
-const io = getIO()
 
 const CreateRoom = async (req, res) => {
 	try {
@@ -32,11 +31,28 @@ const CreateRoom = async (req, res) => {
 const getRoomByOwnerId = async (req, res) => {
 	try {
 		let ownerId = parseInt(req.params.owner_id)
-		const roomList = await Room.findAll({ where: { owner_id: ownerId } })
+		const roomList = await Room.findAll({
+			where: { owner_id: ownerId },
+			raw: true,
+		})
+		console.log(roomList)
 		res.status(200).json(roomList)
 	} catch (error) {
 		res.status(400).json({ error: error })
 	}
 }
 
-module.exports = { CreateRoom, getRoomByOwnerId }
+const getRoomById = async (req, res) => {
+	try {
+		let room = await Room.findByPK(req.params.id)
+		if (room) {
+			res.status(200).json(room)
+		} else {
+			throw 'No Room Found'
+		}
+	} catch (error) {
+		res.status(404).json(error)
+	}
+}
+
+module.exports = { CreateRoom, getRoomByOwnerId, getRoomById }

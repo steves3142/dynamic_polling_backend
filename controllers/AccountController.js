@@ -1,4 +1,3 @@
-const { getIO } = require('../utils/socket')
 const middleware = require('../middleware')
 const { Account, Host, Client, Room } = require('../models')
 const { response } = require('express')

@@ -1,6 +1,5 @@
 const { Answer } = require('../models')
 const { getIO } = require('../utils/socket')
-const io = getIO()
 
 const submitAnswer = async (req, res) => {
 	try {
