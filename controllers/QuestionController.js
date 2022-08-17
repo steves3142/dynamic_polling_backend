@@ -1,5 +1,5 @@
-const { getIO } = require('../utils/socket')
 const { Question, Choice } = require('../models')
+const { getIO } = require('../utils/socket')
 const { Op } = require('sequelize')
 
 const createQuestion = async (req, res) => {
@@ -8,14 +8,15 @@ const createQuestion = async (req, res) => {
 		let questionBody = {
 			...req.body.question,
 		}
-		let choices = [...req.body.choices]
+
 		let question = await Question.create(questionBody)
 		let createdChoices = []
 		if (questionBody.type == 'MC') {
+			let choices = [...req.body.choices]
 			for (const choice of choices) {
 				let option = await Choice.create({
 					question_id: question.id,
-					choice: choice,
+					choice: choice.choice,
 				})
 				createdChoices.push(option)
 			}
@@ -44,7 +45,7 @@ const GetQuestions = async (req, res) => {
 				},
 			},
 			include: ['choices', 'answers'],
-			order: [['createdAt', 'DESC']]
+			order: [['createdAt', 'DESC']],
 		})
 		res.json(questions)
 	} catch (error) {
@@ -56,13 +57,33 @@ const GetQuestions = async (req, res) => {
 const UpdateQuestion = async (req, res) => {
 	try {
 		let questionId = parseInt(req.params.question_id)
-		let room_id = parseInt(req.params.room_id)
-		const updatedQuestion = await Question.update(req.body, {
+		let updatedChoices = []
+		if (req.body.question.type == 'MC') {
+			let choices = req.body.choices
+			for (const choice of choices) {
+				let update = await Choice.update(
+					{ choice: choice.choice },
+					{
+						where: {
+							id: choice.id,
+						},
+						returning: true,
+					}
+				)
+				updatedChoices.push(update)
+			}
+		}
+		updatedChoices = updatedChoices.map((obj) => obj[1][0])
+		let updatedQuestion = await Question.update(req.body.question, {
 			where: { id: questionId },
 			returning: true,
 		})
-		getIO().to(room_id).emit('updated-question', question)
-		res.json(updatedQuestion)
+		updatedQuestion = updatedQuestion[1][0]
+		getIO().to(updatedQuestion.room_id).emit('updated-question', {
+			question: updatedQuestion,
+			choices: updatedChoices,
+		})
+		res.json({ question: updatedQuestion, choices: updatedChoices })
 	} catch (error) {
 		console.log(error)
 		res.status(400).json({ error: 'Something went wrong' })

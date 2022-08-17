@@ -1,6 +1,5 @@
-const { getIO } = require('../utils/socket')
 const middleware = require('../middleware')
-const { Account, Host, Client } = require('../models')
+const { Account, Host, Client, Room } = require('../models')
 const { response } = require('express')
 
 const CreateHost = async (req, res) => {
@@ -90,10 +89,34 @@ const getAccountTypeInfoById = async (req, res) => {
 	}
 }
 
+const joinRoom = async (req, res) => {
+	try {
+		const specificRoom = await Room.findOne({
+			where: { join_key: req.params.join_key },
+			raw: true,
+		})
+		if (specificRoom) {
+			const client = await Client.update(
+				{ room_id: specificRoom.id },
+				{
+					returning: true,
+					where: { id: parseInt(req.params.client_id) },
+				}
+			)
+			res.json(client)
+		} else {
+			res.status(404).json({ message: 'Room not found' })
+		}
+	} catch (error) {
+		res.status(401).json(error)
+	}
+}
+
 module.exports = {
 	CreateHost,
 	CreateClient,
 	login,
 	checkSession,
 	getAccountTypeInfoById,
+	joinRoom,
 }
