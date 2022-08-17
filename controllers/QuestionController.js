@@ -1,4 +1,5 @@
 const { Question, Choice } = require('../models')
+const { getIO } = require('../utils/socket')
 const { Op } = require('sequelize')
 
 const createQuestion = async (req, res) => {
