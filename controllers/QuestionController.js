@@ -1,4 +1,3 @@
-const { getIO } = require('../utils/socket')
 const { Question, Choice } = require('../models')
 const { Op } = require('sequelize')
 
@@ -79,7 +78,9 @@ const UpdateQuestion = async (req, res) => {
 			returning: true,
 		})
 		updatedQuestion = updatedQuestion[1][0]
-		getIO().to(10).emit('updated-question', updatedQuestion)
+		getIO()
+			.to(updatedQuestion.room_id)
+			.emit('updated-question', updatedQuestion)
 		res.json({ question: updatedQuestion, choices: updatedChoices })
 	} catch (error) {
 		console.log(error)

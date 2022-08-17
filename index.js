@@ -19,12 +19,15 @@ app.use('/api', ServerRouter)
 
 getIO().on('connection', (socket) => {
 	console.log(`User ${socket.id} connected`)
-	socket.on('join_room', (room) => {
-		console.log(`${socket.id} is joining room: ${room.id}`)
+
+	socket.on('join-room', (roomId) => {
+		console.log(`${socket.id} is joining room: ${roomId}`)
+		socket.join(roomId)
 	})
 
 	socket.on('send-message', (message) => {
-		getIO().to(10).emit('receive-message', message)
+		console.log(message)
+		getIO().to(message.room_id).emit('receive-message', message)
 	})
 
 	socket.on('room-announce', (data) => {
@@ -32,6 +35,8 @@ getIO().on('connection', (socket) => {
 		console.log(data.room.id)
 		getIO().to(data.room.id).emit('room-announcement', data.message)
 	})
+
+	//for Testing with buttons can remove
 	socket.on('newAnswer', (data) => {
 		console.log('recieved answer', data.answer)
 		getIO().to(10).emit('new-answer', data.answer)

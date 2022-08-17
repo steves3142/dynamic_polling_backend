@@ -1,8 +1,7 @@
 const { UUID } = require('sequelize')
 const ShortUniqueId = require('short-unique-id')
 const { Room } = require('../models')
-const { getIO } = require('../utils/socket')
-const io = getIO()
+
 
 const CreateRoom = async (req, res) => {
 	try {
