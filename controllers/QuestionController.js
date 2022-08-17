@@ -103,9 +103,27 @@ const DeleteQuestion = async (req, res) => {
 	}
 }
 
+const getQuestionById = async (req, res) => {
+	try {
+		let question = await Question.findByPk(parseInt(req.params.id), {
+			include: ['answers', 'choices'],
+		})
+		console.log(question)
+		if (question) {
+			res.json(question)
+		} else {
+			throw 'No Question Found'
+		}
+	} catch (error) {
+		console.log(error)
+		res.status(404).json({ error })
+	}
+}
+
 module.exports = {
 	createQuestion,
 	GetQuestions,
 	UpdateQuestion,
 	DeleteQuestion,
+	getQuestionById,
 }
