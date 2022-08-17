@@ -91,17 +91,23 @@ const getAccountTypeInfoById = async (req, res) => {
 }
 
 const joinRoom = async (req, res) => {
-	try { console.log('hello')
-		const specificRoom = await Room.findOne({ where: { join_key: req.params.join_key } }) 
-		console.log(specificRoom)
+	try {
+		const specificRoom = await Room.findOne({
+			where: { join_key: req.params.join_key },
+			raw: true,
+		})
 		if (specificRoom) {
-			const client = await Client.update({join_key: specificRoom[0].id}, { 
-			returning: true, 
-			where: {id: parseInt(req.params.client_id)}})
-			console.log(client)
+			const client = await Client.update(
+				{ room_id: specificRoom.id },
+				{
+					returning: true,
+					where: { id: parseInt(req.params.client_id) },
+				}
+			)
 			res.json(client)
+		} else {
+			res.status(404).json({ message: 'Room not found' })
 		}
-		else {res.status(404).json({message: 'Room not found'})}
 	} catch (error) {
 		res.status(401).json(error)
 	}
@@ -113,5 +119,5 @@ module.exports = {
 	login,
 	checkSession,
 	getAccountTypeInfoById,
-	joinRoom
+	joinRoom,
 }
