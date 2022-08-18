@@ -6,7 +6,7 @@ module.exports = {
 		dialect: 'postgres',
 	},
 	test: {
-		database: '<Your Database Test Name>',
+		database: 'dynamic_polling_test',
 		dialect: 'postgres',
 	},
 	production: {
