@@ -10,10 +10,10 @@ module.exports = {
 				type: Sequelize.INTEGER,
 			},
       questionListId: {
-        type: Sequelize.STRING
-      }
+        type: Sequelize.INTEGER
+      },
       questionLibraryId: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       }
     });
   },
