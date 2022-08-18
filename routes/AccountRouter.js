@@ -1,6 +1,7 @@
 const Router = require('express').Router()
 const controller = require('../controllers/AccountController')
 const middleware = require('../middleware')
+
 Router.put('/client/:client_id/:join_key', controller.joinRoom)
 Router.post('/login', controller.login)
 Router.get(
