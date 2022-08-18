@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
 			Choice.belongsTo(models.Question, {
 				as: 'choices',
 				foreignKey: 'question_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
@@ -24,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'questions',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 			choice: DataTypes.TEXT,

@@ -10,9 +10,27 @@ module.exports = {
 			},
 			student_id: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'clients',
+					key: 'id',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
+				},
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			},
 			question_id: {
 				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'questions',
+					key: 'id',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
+				},
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			},
 			choice: {
 				type: Sequelize.TEXT,

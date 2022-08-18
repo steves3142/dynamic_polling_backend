@@ -44,7 +44,8 @@ const getRoomByOwnerId = async (req, res) => {
 
 const getRoomById = async (req, res) => {
 	try {
-		let room = await Room.findByPK(req.params.id)
+		console.log('correct route')
+		let room = await Room.findByPk(parseInt(req.params.id))
 		if (room) {
 			res.status(200).json(room)
 		} else {

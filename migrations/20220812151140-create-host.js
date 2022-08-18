@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
 	async up(queryInterface, Sequelize) {
-		await queryInterface.createTable('clients', {
+		await queryInterface.createTable('hosts', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -10,9 +10,15 @@ module.exports = {
 			},
 			account_id: {
 				type: Sequelize.INTEGER,
-			},
-			room_id: {
-				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'accounts',
+					key: 'id',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
+				},
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			},
 			createdAt: {
 				allowNull: false,
@@ -25,6 +31,6 @@ module.exports = {
 		})
 	},
 	async down(queryInterface, Sequelize) {
-		await queryInterface.dropTable('clients')
+		await queryInterface.dropTable('hosts')
 	},
 }

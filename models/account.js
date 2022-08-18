@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
 			Account.hasOne(models.Host, {
 				as: 'host',
 				foreignKey: 'account_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Account.hasOne(models.Client, {
 				as: 'client',
 				foreignKey: 'account_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
