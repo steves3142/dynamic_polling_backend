@@ -6,14 +6,14 @@ module.exports = (sequelize, DataTypes) => {
 			Answer.belongsTo(models.Question, {
 				as: 'student_answer',
 				foreignKey: 'question_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 			Answer.belongsTo(models.Client, {
 				as: 'answerer',
 				foreignKey: 'student_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'clients',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 			question_id: {
@@ -35,8 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'questions',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 			response: DataTypes.TEXT,

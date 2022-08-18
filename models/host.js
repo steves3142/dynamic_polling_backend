@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
 			Host.belongsTo(models.Account, {
 				as: 'host',
 				foreignKey: 'account_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Host.hasMany(models.Room, {
 				as: 'room_owner',
 				foreignKey: 'owner_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
@@ -26,8 +26,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'accounts',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 		},

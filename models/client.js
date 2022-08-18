@@ -6,22 +6,22 @@ module.exports = (sequelize, DataTypes) => {
 			Client.belongsTo(models.Account, {
 				as: 'client_account',
 				foreignKey: 'account_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Client.hasMany(models.Answer, {
 				as: 'answers',
 				foreignKey: 'student_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Client.belongsTo(models.Room, {
 				as: 'client',
 				foreignKey: 'room_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'accounts',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 			room_id: {
@@ -44,8 +44,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'rooms',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'SET NULL',
+					onUpdate: 'SET NULL',
 				},
 			},
 		},

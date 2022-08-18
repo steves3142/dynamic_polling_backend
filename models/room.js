@@ -11,22 +11,22 @@ module.exports = (sequelize, DataTypes) => {
 			Room.hasMany(models.Question, {
 				as: 'questions',
 				foreignKey: 'room_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Room.belongsTo(models.Host, {
 				as: 'owner',
 				foreignKey: 'owner_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 
 			Room.hasMany(models.Client, {
 				as: 'clients',
 				foreignKey: 'room_id',
-				onDelete: 'cascade',
-				onUpdate: 'cascade',
+				onDelete: 'CASCADE',
+				onUpdate: 'CASCADE',
 			})
 		}
 	}
@@ -38,8 +38,8 @@ module.exports = (sequelize, DataTypes) => {
 				references: {
 					model: 'hosts',
 					key: 'id',
-					onDelete: 'cascade',
-					onUpdate: 'cascade',
+					onDelete: 'CASCADE',
+					onUpdate: 'CASCADE',
 				},
 			},
 			name: DataTypes.STRING,
