@@ -1,33 +1,40 @@
 'use strict'
 const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-	class Question_Library extends Model {
+	class QuestionList extends Model {
 		static associate(models) {
-			Question_Library.hasOne(models.Subject_List, {
-				as: 'host',
-				foreignKey: 'owner_id',
-				onDelete: 'CASCADE',
-				onUpdate: 'CASCADE',
-			})
+			// QuestionList.hasOne(models.Subject_List, {
+			// 	as: 'host',
+			// 	foreignKey: 'owner_id',
+			// 	onDelete: 'CASCADE',
+			// 	onUpdate: 'CASCADE',
+			// })
 
-            Question_Library.belongsTo(models.Question_Through_Table, )
-			Account.hasOne(models.Client, {
-				as: 'client',
-				foreignKey: 'account_id',
-				onDelete: 'CASCADE',
-				onUpdate: 'CASCADE',
-			})
+            // QuestionList.belongsTo(models.Question_Through_Table, )
+			// Account.hasOne(models.Client, {
+			// 	as: 'client',
+			// 	foreignKey: 'account_id',
+			// 	onDelete: 'CASCADE',
+			// 	onUpdate: 'CASCADE',
+			// })
 		}
 	}
-	Question_Library.init(
+	QuestionList.init(
 		{
-			subjectId: DataTypes.STRING,
+			owner_id: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                models: 'hosts',
+                key: 'id',
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
+            }
 		},
 		{
 			sequelize,
-			modelName: 'Question_Library',
-			tableName: 'question_libraries',
+			modelName: 'QuestionList',
+			tableName: 'questions_list',
 		}
 	)
-	return Question_Library
+	return QuestionList
 }

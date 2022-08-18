@@ -2,7 +2,7 @@
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('quetion_list', {
+    await queryInterface.createTable('question_list', {
 			id: {
 				allowNull: false,
 				autoIncrement: true,
@@ -11,7 +11,7 @@ module.exports = {
 			},
       ownerId: {
         type: Sequelize.STRING
-      }
+      },
       name: {
         type: Sequelize.STRING
       }
