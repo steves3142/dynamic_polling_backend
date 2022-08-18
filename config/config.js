@@ -4,9 +4,11 @@ module.exports = {
 	development: {
 		database: 'dynamic_polling',
 		dialect: 'postgres',
+		username: 'an',
+		password: 'Grad2019',
 	},
 	test: {
-		database: '<Your Database Test Name>',
+		database: 'dynamic_polling_test',
 		dialect: 'postgres',
 	},
 	production: {
