@@ -1,13 +1,12 @@
 const middleware = require('../middleware')
 const { Account, Host, Client, Room } = require('../models')
-const { response } = require('express')
 
 const CreateHost = async (req, res) => {
 	try {
 		const { email, password, type, displayName } = req.body
 		let passwordDigest = await middleware.hashPassword(password)
 		let accountBody = {
-			email,
+			email: email.toLowerCase(),
 			display_name: displayName,
 			passwordDigest: passwordDigest,
 			type: type,
@@ -26,7 +25,7 @@ const CreateClient = async (req, res) => {
 		const { email, password, type, displayName } = req.body
 		let passwordDigest = await middleware.hashPassword(password)
 		let accountBody = {
-			email,
+			email: email.toLowerCase(),
 			display_name: displayName,
 			passwordDigest: passwordDigest,
 			type: type,
@@ -43,13 +42,10 @@ const CreateClient = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const user = await Account.findOne({
-			where: { email: req.body.email },
+			where: { email: req.body.email.toLowerCase() },
 			raw: true,
 		})
-		if (
-			user &&
-			(await middleware.comparePassword(user.passwordDigest, req.body.password))
-		) {
+		if (user && (await middleware.comparePassword(user.passwordDigest, req.body.password))) {
 			let payload = {
 				id: user.id,
 				email: user.email,

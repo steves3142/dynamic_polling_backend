@@ -7,10 +7,12 @@ const middleware = require('../middleware')
 
 Router.use('/account', AccountRouter)
 
+//Protected Routes forward
 Router.get('/*', middleware.stripToken, middleware.verifyToken)
 Router.put('/*', middleware.stripToken, middleware.verifyToken)
 Router.delete('/*', middleware.stripToken, middleware.verifyToken)
 Router.post('/*', middleware.stripToken, middleware.verifyToken)
+
 Router.use('/student', StudentRouter)
 Router.use('/host', HostRouter)
 Router.use('/room', RoomRouter)
