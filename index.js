@@ -36,6 +36,10 @@ getIO().on('connection', (socket) => {
 		getIO().to(data.room.id).emit('room-announcement', data.message)
 	})
 
+	socket.on('close-room', (roomId) => {
+		getIO().to(roomId).emit('close-submission')
+	})
+
 	//for Testing with buttons can remove
 	socket.on('newAnswer', (data) => {
 		console.log('recieved answer', data.answer)
