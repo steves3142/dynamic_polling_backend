@@ -44,7 +44,6 @@ const getRoomByOwnerId = async (req, res) => {
 
 const getRoomById = async (req, res) => {
 	try {
-		console.log('correct route')
 		let room = await Room.findByPk(parseInt(req.params.id))
 		if (room) {
 			res.status(200).json(room)
@@ -56,4 +55,13 @@ const getRoomById = async (req, res) => {
 	}
 }
 
-module.exports = { CreateRoom, getRoomByOwnerId, getRoomById }
+const deleteRoomById = async (req, res) => {
+	try {
+		await Room.destroy({ where: { id: parseInt(req.params.room_id) } })
+		res.status(200).json('ok')
+	} catch (error) {
+		res.status(400).json('Something went wrong')
+	}
+}
+
+module.exports = { CreateRoom, getRoomByOwnerId, getRoomById, deleteRoomById }
