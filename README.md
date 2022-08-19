@@ -13,6 +13,14 @@ A teaching app for improving student engagement!
 - React
 - Node 
 
+## Application Link
+
+http://dynasoar.herokuapp.com/ 
+
+## Frontend Repository
+
+https://github.com/steves3142/dynamic_polling_frontend 
+
 ## MVP 
 
 -Functional socket connections
